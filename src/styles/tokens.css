@@ -1,0 +1,202 @@
+/* ================================================================
+   ESTUDEVET · BY ZELOVET — DESIGN TOKENS (fonte única de verdade)
+   ================================================================
+   Identidade Universo ZeloVet:
+   - Verde Zelo profundo #0C3328 (shell: sidebar/topbar)
+   - Teal #12876C (ação primária)
+   - Dourado #C99D66 (fio de ouro: streak, XP, conquistas)
+   - Creme #F7F5F0 (tela) + branco (cartões)
+   Tipografia: Plus Jakarta Sans (display) + Inter (corpo)
+   Mantém TODOS os nomes de variáveis da v9.1 — os screen CSS
+   continuam funcionando sem alteração.
+   ================================================================ */
+:root {
+
+  /* ── BRAND ── */
+  --brand-green:       #12876C;
+  --brand-green-hover: #17A583;
+  --brand-green-soft:  rgba(18,135,108,.10);
+  --brand-green-line:  rgba(18,135,108,.28);
+  --brand-yellow:      #B98B54;
+  --brand-yellow-soft: rgba(201,157,102,.14);
+
+  /* Verdes profundos da marca (shell) */
+  --zelo-deep:   #0C3328;
+  --zelo-deep-2: #0F3B31;
+  --zelo-deep-3: #124537;
+  --gold:        #C99D66;
+  --gold-l:      #E4C89A;
+  --gold-dim:    #A87F4E;
+
+  /* Aliases curtos */
+  --accent:      #12876C;
+  --accent-l:    #17A583;
+  --accent-dim:  #0C5C4A;
+  --accent-soft: rgba(18,135,108,.10);
+  --accent-line: rgba(18,135,108,.25);
+  --yellow:      #B98B54;
+  --yellow-l:    #C99D66;
+  --yellow-soft: rgba(201,157,102,.14);
+
+  /* ── BACKGROUNDS (conteúdo claro, creme ZeloVet) ── */
+  --bg:   #F7F5F0;
+  --bg2:  #F1EDE5;
+  --bg3:  #FFFFFF;
+  --bg4:  #F4F1EA;
+  --bg5:  #E9E4D8;
+
+  /* Aliases --bg-N (usados nos screen CSS) */
+  --bg-1: var(--bg);
+  --bg-2: var(--bg2);
+  --bg-3: var(--bg3);
+  --bg-4: var(--bg4);
+  --bg-5: var(--bg5);
+
+  /* Aliases surface (usados em base.css / JS) */
+  --surface:  var(--bg3);
+  --surface2: var(--bg4);
+  --surface3: var(--bg5);
+
+  /* ── SHELL (sidebar/topbar verde profundo) ── */
+  --shell-bg:       #0C3328;
+  --shell-bg-2:     #0F3B31;
+  --shell-hover:    rgba(255,255,255,.06);
+  --shell-active:   rgba(255,255,255,.10);
+  --shell-text:     #EAF3EF;
+  --shell-text-dim: #8FB3A6;
+  --shell-label:    #C99D66;
+  --shell-border:   rgba(255,255,255,.08);
+
+  /* ── TEXT (escuro sobre claro) ── */
+  --text-primary:    #14231D;
+  --text-secondary:  #44594E;
+  --text-tertiary:   #75887D;
+  --text-quaternary: #A7B5AC;
+  --text-on-brand:   #FFFFFF;
+
+  /* Aliases curtos */
+  --text:  var(--text-primary);
+  --text2: var(--text-secondary);
+  --text3: var(--text-tertiary);
+  --text-1: var(--text-primary);
+  --text-2: var(--text-secondary);
+  --text-3: var(--text-tertiary);
+
+  /* ── SEMANTIC COLORS ── */
+  --success:      #12876C;
+  --success-soft: rgba(18,135,108,.10);
+  --success-bg:   #E3F2EC;
+  --danger:       #C64B5D;
+  --danger-soft:  rgba(198,75,93,.10);
+  --danger-bg:    #FAECEE;
+  --warning:      #B98B54;
+  --warning-soft: rgba(201,157,102,.14);
+  --info:         #2E7CC7;
+  --info-soft:    rgba(46,124,199,.10);
+
+  --green:     #12876C;
+  --red:       #C64B5D;
+  --red-soft:  rgba(198,75,93,.10);
+  --red-bg:    #FAECEE;
+  --blue:      #2E7CC7;
+  --blue-soft: rgba(46,124,199,.10);
+  --orange:    #D97E3C;
+  --pink:      #C05A8E;
+
+  /* ── BORDERS (neutros esverdeados) ── */
+  --border-subtle:  rgba(12,51,40,.08);
+  --border-default: rgba(12,51,40,.12);
+  --border-strong:  rgba(12,51,40,.24);
+  --border-active:  rgba(18,135,108,.55);
+
+  /* Aliases curtos */
+  --border:   var(--border-default);
+  --border-h: var(--border-strong);
+
+  /* ── TYPOGRAPHY ── */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font:         'Inter', sans-serif;
+  --mono:         'DM Mono', monospace;
+
+  /* Escala de tamanhos */
+  --fs-xs:   11px;
+  --fs-sm:   12px;
+  --fs-base: 13px;
+  --fs-md:   14px;
+  --fs-lg:   15px;
+  --fs-xl:   18px;
+  --fs-2xl:  22px;
+  --fs-3xl:  28px;
+  --fs-4xl:  36px;
+
+  /* Pesos */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+  --fw-black:   800;
+
+  /* Line heights */
+  --lh-tight:  1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.75;
+
+  /* ── ESPAÇAMENTO (escala 4px) ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── CONTAINERS ── */
+  --container-sm:   480px;
+  --container-md:   720px;
+  --container-lg:   960px;
+  --container-xl: 1200px;
+
+  /* ── RADIUS ── */
+  --radius-sm:   8px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-pill: 999px;
+
+  /* Aliases curtos */
+  --r:      var(--radius-lg);
+  --r-sm:   var(--radius-md);
+  --r-pill: var(--radius-pill);
+
+  /* ── SHADOWS (suaves, tema claro) ── */
+  --shadow-sm:    0 1px 3px rgba(12,51,40,.06);
+  --shadow:       0 2px 10px rgba(12,51,40,.07);
+  --shadow-md:    0 8px 28px rgba(12,51,40,.10);
+  --shadow-lg:    0 16px 48px rgba(12,51,40,.14);
+  --shadow-brand: 0 6px 18px rgba(18,135,108,.28);
+
+  /* ── TRANSIÇÕES ── */
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --t-slow: 400ms;
+
+  --ease:        cubic-bezier(.16,1,.3,1);
+  --ease-out:    cubic-bezier(.16,1,.3,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
+
+  /* ── LAYOUT ── */
+  --top:  56px;
+  --side: 232px;
+
+  /* ── Z-INDEX ── */
+  --z-base:    1;
+  --z-sticky:  10;
+  --z-sidebar: 100;
+  --z-topbar:  200;
+  --z-modal:   300;
+  --z-toast:   400;
+
+}

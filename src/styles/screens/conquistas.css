@@ -1,0 +1,228 @@
+/* ============================================================
+   CONQUISTAS — Badges desbloqueados, agrupados por categoria
+   ============================================================ */
+
+.conq {
+  flex-direction: column;
+  min-height: auto;
+}
+
+.conq__body {
+  flex: 1;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─────────── PROGRESSO GERAL ─────────── */
+
+.conq-progress {
+  background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.conq-progress::after {
+  content: '🏅';
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 4rem;
+  opacity: 0.10;
+}
+.conq-progress__num {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-3xl);
+  background: linear-gradient(90deg, var(--brand-yellow), var(--brand-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.conq-progress__label {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+.conq-progress__bar {
+  height: 8px;
+  background: var(--bg-4);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  max-width: 280px;
+  margin: 0 auto;
+}
+.conq-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand-yellow), var(--brand-green));
+  transition: width 1s var(--ease-in-out);
+}
+
+/* ─────────── CATEGORIAS ─────────── */
+
+.conq-cat {
+  margin-bottom: var(--space-8);
+}
+.conq-cat__title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.conq-cat__icon {
+  font-size: var(--fs-xl);
+}
+
+/* ─────────── GRID ─────────── */
+
+.conq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.conq-card {
+  background: var(--bg-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  position: relative;
+  transition: all var(--t-base) var(--ease-out);
+  overflow: hidden;
+}
+.conq-card--locked {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+}
+.conq-card--unlocked {
+  border-color: var(--brand-green-line);
+  background: linear-gradient(135deg, var(--brand-green-soft), var(--bg-3));
+}
+.conq-card--unlocked::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, var(--brand-green-soft), transparent 60%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.conq-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.conq-card__check {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--brand-green);
+  color: var(--text-on-brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+}
+
+.conq-card__icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: var(--space-2);
+  position: relative;
+  z-index: 1;
+}
+.conq-card__nome {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-1);
+  position: relative;
+  z-index: 1;
+}
+.conq-card__cond {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────── MODAL DE DESBLOQUEIO ─────────── */
+
+.unlock-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.unlock-overlay.show { display: flex; }
+
+.unlock-card {
+  background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
+  border: 2px solid var(--brand-yellow);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 60px rgba(201, 157, 102, 0.4);
+  animation: unlock-pop 0.6s var(--ease-out);
+}
+@keyframes unlock-pop {
+  0%   { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  60%  { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.unlock-card__label {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-xs);
+  color: var(--brand-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-3);
+}
+.unlock-card__icon {
+  font-size: 4.5rem;
+  display: block;
+  margin-bottom: var(--space-3);
+  filter: drop-shadow(0 0 24px rgba(201, 157, 102, 0.6));
+  animation: unlock-shine 2s ease-in-out infinite;
+}
+@keyframes unlock-shine {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+.unlock-card__nome {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-2xl);
+  margin-bottom: var(--space-2);
+}
+.unlock-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-5);
+}

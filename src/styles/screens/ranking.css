@@ -1,0 +1,207 @@
+/* ============================================================
+   RANKING — Top alunos por XP, streak, questões
+   ============================================================ */
+
+.ranking {
+  flex-direction: column;
+  min-height: auto;
+}
+
+.ranking__body {
+  flex: 1;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  max-width: var(--container-md);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─────────── PÓDIO (top 3) ─────────── */
+
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: var(--space-2);
+  align-items: end;
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-2) 0;
+}
+
+.podium-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-4) var(--space-2) var(--space-3);
+  position: relative;
+}
+.podium-step--1 {
+  border-color: var(--brand-yellow);
+  background: linear-gradient(180deg, var(--warning-soft), var(--bg-3));
+  padding-top: var(--space-6);
+  height: 200px;
+}
+.podium-step--2 {
+  height: 170px;
+}
+.podium-step--3 {
+  height: 150px;
+}
+
+.podium-step__crown {
+  position: absolute;
+  top: -16px;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 8px rgba(201, 157, 102, 0.5));
+}
+.podium-step__medal {
+  font-size: 1.6rem;
+  margin-bottom: var(--space-1);
+}
+.podium-step__nome {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.podium-step__valor {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-lg);
+  color: var(--brand-green);
+  line-height: 1;
+}
+.podium-step__label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* ─────────── ABAS DE RANKING ─────────── */
+
+.ranking-tabs {
+  display: flex;
+  gap: var(--space-1);
+  background: var(--bg-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.ranking-tab {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-tertiary);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--t-fast);
+  text-align: center;
+}
+.ranking-tab:hover {
+  color: var(--text-primary);
+}
+.ranking-tab.active {
+  background: var(--brand-green);
+  color: var(--text-on-brand);
+  font-weight: var(--fw-bold);
+}
+
+/* ─────────── LISTA ─────────── */
+
+.rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  transition: all var(--t-base);
+}
+.rank-row:hover {
+  border-color: var(--brand-green-line);
+}
+.rank-row--you {
+  border-color: var(--brand-yellow);
+  background: linear-gradient(90deg, var(--warning-soft) 0%, var(--bg-3) 30%);
+  position: sticky;
+  bottom: var(--space-4);
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+}
+
+.rank-row__pos {
+  width: 32px;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  color: var(--text-tertiary);
+  text-align: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.rank-row__pos--gold   { color: var(--brand-yellow); }
+.rank-row__pos--silver { color: #b0c4d4; }
+.rank-row__pos--bronze { color: #cd7f32; }
+
+.rank-row__nome {
+  flex: 1;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.rank-row__streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.rank-row__streak strong {
+  color: var(--text-primary);
+  font-weight: var(--fw-bold);
+}
+
+.rank-row__valor {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  color: var(--brand-green);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-row__badge {
+  background: var(--brand-yellow);
+  color: var(--text-on-brand);
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  margin-left: var(--space-1);
+}

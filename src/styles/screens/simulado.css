@@ -1,0 +1,147 @@
+/* ============================================================
+   SIMULADO — Seleção de matéria e configuração
+   ============================================================ */
+
+.simulado-tab {
+  flex-direction: column;
+  min-height: auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+}
+
+.simulado-tab__container {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.page-header__back {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--t-fast);
+}
+.page-header__back:hover {
+  background: var(--bg-4);
+  color: var(--text-primary);
+  border-color: var(--brand-green-line);
+}
+.page-header__title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+}
+.page-header__sub {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* Grid de matérias */
+.materias-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.materia-card {
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.materia-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--brand-green);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--t-base) var(--ease-out);
+}
+.materia-card:hover {
+  background: var(--bg-4);
+  border-color: var(--brand-green-line);
+  transform: translateY(-2px);
+}
+.materia-card:hover::before,
+.materia-card.selected::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+.materia-card.selected {
+  background: var(--brand-green-soft);
+  border-color: var(--brand-green);
+}
+
+.materia-card__icon {
+  font-size: var(--fs-xl);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+.materia-card__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  display: block;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+.materia-card__count {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+/* Configuração da quantidade */
+.config-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.config-row__label {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  flex: 1;
+}
+.config-row__select {
+  background: var(--bg-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.config-row__select:focus {
+  outline: none;
+  border-color: var(--brand-green);
+}

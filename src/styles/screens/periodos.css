@@ -1,0 +1,192 @@
+/* ============================================================
+   PERÍODOS — Grade curricular do curso
+   ============================================================ */
+
+.periodos {
+  flex-direction: column;
+  min-height: auto;
+}
+
+.periodos__body {
+  flex: 1;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.periodos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-3);
+}
+
+.periodo-card {
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.periodo-card:hover:not(.periodo-card--locked) {
+  transform: translateY(-3px);
+  border-color: var(--brand-green-line);
+  box-shadow: var(--shadow-md);
+}
+.periodo-card--current {
+  border-color: var(--brand-green);
+  background: linear-gradient(135deg, var(--brand-green-soft), var(--bg-3));
+}
+.periodo-card--current::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at top right, var(--brand-green-soft), transparent 70%);
+  pointer-events: none;
+}
+.periodo-card--locked {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.periodo-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+.periodo-card__num {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-xl);
+  color: var(--text-primary);
+}
+.periodo-card--locked .periodo-card__num {
+  color: var(--text-quaternary);
+}
+.periodo-card__badge {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+}
+.periodo-card__badge--current {
+  background: var(--brand-green);
+  color: var(--text-on-brand);
+}
+.periodo-card__badge--locked {
+  background: var(--bg-4);
+  color: var(--text-tertiary);
+}
+
+.periodo-card__materias {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+.periodo-card__materia {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.periodo-card__materia::before {
+  content: '•';
+  color: var(--brand-green);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+.periodo-card--locked .periodo-card__materia::before {
+  color: var(--text-quaternary);
+}
+.periodo-card__more {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+/* ============================================================
+   MATÉRIA-ESCOLHA — Lista de matérias do período ativo
+   ============================================================ */
+
+.materia-escolha {
+  flex-direction: column;
+  min-height: auto;
+}
+.materia-escolha__body {
+  flex: 1;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  max-width: var(--container-md);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.materia-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.materia-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--bg-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
+  text-align: left;
+  width: 100%;
+}
+.materia-item:hover {
+  transform: translateX(4px);
+  border-color: var(--brand-green-line);
+  background: var(--bg-4);
+}
+
+.materia-item__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--brand-green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.materia-item__body { flex: 1; min-width: 0; }
+.materia-item__nome {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+.materia-item__sub {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+.materia-item__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
