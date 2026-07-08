@@ -1,4 +1,5 @@
 import { livrosDaMateria, secoesDoCapitulo } from '../../data/conteudo.repo.js';
+import { ir, aoEntrar } from '../../core/router.js';
 
 
 import { toastErro } from '../../core/toast.js';
@@ -119,6 +120,23 @@ const COM_QUESTOES = new Set(['analisesclinicas','patologia','semiologia','farma
 // Matérias com conteúdo teórico
 const COM_CONTEUDO = new Set(['imunologia','analisesclinicas','farmacologia','inspecaoleite','patologia','semiologia','aquicultura','zootecnia']);
 
+
+// ── Cor de cada trilha (identidade clara ZeloVet) ─────────
+const TRILHA_COR = {
+  basicas:      '#2E7CC7',
+  diagnostico:  '#12876C',
+  farmacologia: '#D97E3C',
+  clinica:      '#C64B5D',
+  cirurgia:     '#7A5CB8',
+  inspecao:     '#B98B54',
+  producao:     '#5E8C3A',
+  reproducao:   '#C05A8E',
+};
+
+// Mapa plano id -> nome (usado pelo seletor e pré-seleção da home)
+const DISCIPLINAS = {};
+TRILHAS.forEach(t => t.disciplinas.forEach(d => { DISCIPLINAS[d.id] = d.nome; }));
+
 // ── RENDERIZAR TRILHAS ────────────────────────────────────
 export function renderizar() {
   const tela = document.getElementById('estudo-screen');
@@ -130,7 +148,7 @@ export function renderizar() {
       <div class="estudo-inline-header">
         <div>
           <h1 style="font-size:var(--fs-2xl);font-weight:var(--fw-bold);color:var(--text-primary);margin:0 0 4px">
-            📖 Estudar
+            Estudar
           </h1>
           <p style="font-size:var(--fs-sm);color:var(--text-tertiary);margin:0">
             Trilhas organizadas por área de conhecimento · 50+ disciplinas
@@ -166,7 +184,7 @@ export function renderizar() {
             <div style="font-size:10px;color:var(--text-tertiary);letter-spacing:.06em">COM QUESTÕES</div>
           </div>
           <div style="text-align:right">
-            <div style="font-size:var(--fs-xl);font-weight:var(--fw-bold);color:#EF9F27">30+</div>
+            <div style="font-size:var(--fs-xl);font-weight:var(--fw-bold);color:var(--gold-dim)">30+</div>
             <div style="font-size:10px;color:var(--text-tertiary);letter-spacing:.06em">EM PREPARO</div>
           </div>
         </div>
@@ -196,29 +214,29 @@ function renderTrilha(t) {
       </div>
 
       <div class="estudo-carrossel">
-        ${t.disciplinas.map(d => renderCard(d)).join('')}
+        ${t.disciplinas.map(d => renderCard(d, TRILHA_COR[t.id] || '#12876C')).join('')}
       </div>
     </div>
   `;
 }
 
-function renderCard(d) {
+function renderCard(d, cor) {
   const temQuestoes = COM_QUESTOES.has(d.id);
   const temConteudo = COM_CONTEUDO.has(d.id);
-  const badge = temQuestoes
-    ? `<div class="estudo-card__badge">50 questões</div>` : '';
-  const badgeConteudo = temConteudo && !temQuestoes
-    ? `<div class="estudo-card__badge" style="background:rgba(239,159,39,.9)">📖 Conteúdo</div>` : '';
+  const badges = [
+    temQuestoes ? `<span class="estudo-card__tag estudo-card__tag--q">50 questões</span>` : '',
+    temConteudo ? `<span class="estudo-card__tag estudo-card__tag--c">Conteúdo</span>` : '',
+  ].join('');
 
   return `
-    <div class="estudo-card" data-abrir="${d.id}" data-nome="${d.nome}">
-      <div class="estudo-card__banner" style="background:${d.grad}">
-        ${badge}${badgeConteudo}
-        <span style="font-size:48px;opacity:.85">${d.emoji}</span>
+    <div class="estudo-card" data-abrir="${d.id}" data-nome="${d.nome}" style="--card-accent:${cor}">
+      <div class="estudo-card__banner">
+        <span class="estudo-card__chip">${d.emoji}</span>
+        <div class="estudo-card__tags">${badges || '<span class="estudo-card__tag estudo-card__tag--soon">Em breve</span>'}</div>
       </div>
       <div class="estudo-card__body">
         <div class="estudo-card__nome">${d.nome}</div>
-        <div class="estudo-card__meta">${d.meta}${temQuestoes ? ' · Questões + Flashcards' : temConteudo ? ' · Conteúdo teórico' : ' · Em breve'}</div>
+        <div class="estudo-card__meta">${d.meta}</div>
         <div class="estudo-card__progress-wrap">
           <span class="estudo-card__progress-label">Progresso</span>
           <span class="estudo-card__progress-pct">—</span>
@@ -240,7 +258,7 @@ function registrarEventosTrilhas() {
   tela.addEventListener('click', async (e) => {
     const card = e.target.closest('[data-abrir]');
     if (!card) return;
-    await abrirViewer(card.dataset.abrir, card.dataset.nome);
+    abrirEscolha(card.dataset.abrir, card.dataset.nome);
   });
 }
 
@@ -413,4 +431,100 @@ function atualizarSecao() {
   document.getElementById('ev-proximo')?.toggleAttribute('disabled', _secaoIdx >= _secoes.length - 1);
 }
 
-export const montarEstudo = renderizar;
+// ── SELETOR: Questões x Conteúdo ──────────────────────────
+function abrirEscolha(id, nome) {
+  nome = nome || DISCIPLINAS[id] || id;
+  const temQ = COM_QUESTOES.has(id);
+  const temC = COM_CONTEUDO.has(id);
+
+  if (!temQ && !temC) {
+    toastErro('Disciplina em preparação — em breve!');
+    return;
+  }
+  if (!temQ && temC) return abrirViewer(id, nome);
+
+  fecharEscolha();
+  const overlay = document.createElement('div');
+  overlay.id = 'estudo-escolha';
+  overlay.className = 'esc-overlay';
+  overlay.innerHTML = `
+    <div class="esc-modal">
+      <div class="esc-modal__hd">
+        <div>
+          <div class="esc-modal__eyebrow">O que você quer fazer?</div>
+          <div class="esc-modal__title">${nome}</div>
+        </div>
+        <button class="esc-modal__close" data-esc-fechar>✕</button>
+      </div>
+      <div class="esc-modal__opts">
+        <button class="esc-opt" data-esc-questoes>
+          <div class="esc-opt__icon esc-opt__icon--q">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+          </div>
+          <div class="esc-opt__txt">
+            <div class="esc-opt__nome">Fazer questões</div>
+            <div class="esc-opt__desc">Simulado com correção e análise de erros</div>
+          </div>
+          <span class="esc-opt__arrow">→</span>
+        </button>
+        ${temC ? `
+        <button class="esc-opt" data-esc-conteudo>
+          <div class="esc-opt__icon esc-opt__icon--c">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="esc-opt__txt">
+            <div class="esc-opt__nome">Estudar conteúdo</div>
+            <div class="esc-opt__desc">Teoria guiada por capítulos dos livros de referência</div>
+          </div>
+          <span class="esc-opt__arrow">→</span>
+        </button>` : ''}
+      </div>
+      <div class="esc-modal__qtd">
+        <span>Questões no simulado</span>
+        <select id="esc-qtd">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.closest('[data-esc-fechar]')) return fecharEscolha();
+    if (e.target.closest('[data-esc-questoes]')) {
+      const qtd = parseInt(document.getElementById('esc-qtd')?.value, 10) || 10;
+      sessionStorage.setItem('ev_quiz_config', JSON.stringify({ modo: 'materia', materia: id, qtd }));
+      fecharEscolha();
+      ir('quiz');
+      return;
+    }
+    if (e.target.closest('[data-esc-conteudo]')) {
+      fecharEscolha();
+      abrirViewer(id, nome);
+    }
+  });
+  document.addEventListener('keydown', escComEsc);
+}
+
+function escComEsc(e) { if (e.key === 'Escape') fecharEscolha(); }
+function fecharEscolha() {
+  document.getElementById('estudo-escolha')?.remove();
+  document.removeEventListener('keydown', escComEsc);
+}
+
+export function montarEstudo() {
+  renderizar();
+  // Pré-seleção vinda da home ("continuar de onde parou")
+  aoEntrar('estudo-screen', () => {
+    const pre = sessionStorage.getItem('ev_pre_materia');
+    if (pre) {
+      sessionStorage.removeItem('ev_pre_materia');
+      if (_modoViewer) renderizar();
+      abrirEscolha(pre, DISCIPLINAS[pre]);
+    }
+  });
+}

@@ -139,7 +139,7 @@ async function iniciarSessao() {
   const cfgRaw = sessionStorage.getItem('ev_quiz_config');
   if (!cfgRaw) {
     toast('Configure o simulado primeiro');
-    return ir('simulado-tab');
+    return ir('estudo-screen');
   }
 
   const cfg = JSON.parse(cfgRaw);
@@ -169,7 +169,7 @@ async function iniciarSessao() {
 
   if (!questoes.length) {
     toast('Nenhuma questão disponível para essa configuração');
-    return ir('simulado-tab');
+    return ir('estudo-screen');
   }
 
   estado.questoes = questoes;

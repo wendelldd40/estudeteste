@@ -56,6 +56,7 @@
   --surface:  var(--bg3);
   --surface2: var(--bg4);
   --surface3: var(--bg5);
+  --bg-card:  #FFFFFF;
 
   /* ── SHELL (sidebar/topbar verde profundo) ── */
   --shell-bg:       #0C3328;

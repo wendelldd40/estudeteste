@@ -202,7 +202,7 @@ async function tratarClique(e) {
       const materia = alvo.dataset.materia;
       // Por enquanto, leva pra simulado-tab pré-selecionando a matéria
       sessionStorage.setItem('ev_pre_materia', materia);
-      ir('simulado-tab');
+      ir('estudo-screen');
       break;
     }
     case 'logout': {

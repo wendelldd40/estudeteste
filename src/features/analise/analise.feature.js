@@ -77,7 +77,7 @@ function renderizar() {
         <p class="empty-state__text">
           Faça pelo menos um simulado para que possamos mapear seus pontos fortes e fracos.
         </p>
-        <button class="btn btn--primary" data-goto="simulado-tab">Fazer um simulado →</button>
+        <button class="btn btn--primary" data-goto="estudo-screen">Fazer um simulado →</button>
       </div>
     `;
     return;
@@ -101,7 +101,7 @@ function renderRecomendacao(r) {
               data-subject="${r.acao.subject}">
          ⚡ Revisar agora
        </button>`
-    : `<button class="btn btn--secondary" data-goto="simulado-tab">
+    : `<button class="btn btn--secondary" data-goto="estudo-screen">
          Fazer simulado →
        </button>`;
 

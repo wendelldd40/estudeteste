@@ -109,7 +109,7 @@ function popular() {
         <p class="empty-state__text">
           Quando você responder questões de várias matérias, mostraremos onde você está mais forte e onde precisa focar.
         </p>
-        <button class="btn btn--primary" data-goto="simulado-tab">Fazer simulado →</button>
+        <button class="btn btn--primary" data-goto="estudo-screen">Fazer simulado →</button>
       </div>
     `}
   `;

@@ -84,7 +84,7 @@ function tratarClique(e) {
 
   if (acaoEl.dataset.acao === 'praticar') {
     sessionStorage.setItem('ev_pre_materia', materia);
-    ir('simulado-tab');
+    ir('estudo-screen');
   } else if (acaoEl.dataset.acao === 'estudar') {
     sessionStorage.setItem('ev_estudo_materia', materia);
     ir('estudo-screen');

@@ -70,7 +70,7 @@ export function resultsTemplate() {
         </div>
 
         <div class="results-actions">
-          <button class="btn btn--primary btn--block btn--lg" data-goto="simulado-tab">
+          <button class="btn btn--primary btn--block btn--lg" data-goto="estudo-screen">
             Estudar mais →
           </button>
           <button class="btn btn--secondary btn--block" data-goto="home">

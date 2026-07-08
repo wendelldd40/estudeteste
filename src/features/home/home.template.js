@@ -71,7 +71,7 @@ export function homeTemplate() {
         <!-- AÇÕES PRIMÁRIAS -->
         <h3 class="section-title">Estudar agora</h3>
         <div class="actions-primary">
-          <button class="action-card action-card--featured" data-goto="simulado-tab">
+          <button class="action-card action-card--featured" data-goto="estudo-screen">
             <div class="action-card__icon">📚</div>
             <div class="action-card__title">Simulado</div>
             <div class="action-card__desc">Praticar questões por matéria</div>
