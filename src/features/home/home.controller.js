@@ -35,8 +35,10 @@ async function popular() {
   }
 
   popularSaudacao(perfil);
+  popularData();
   popularStreak(perfil);
   popularXpDia();
+  popularSemana();
   popularStats(perfil);
   popularBadge(perfil);
   await popularContinuar();
@@ -68,8 +70,40 @@ function popularStreak(perfil) {
 function popularXpDia() {
   const xp = getXpDia();
   const pct = Math.min(100, Math.round((xp.valor / XP_DIARIO_CAP) * 100));
-  $('xp-dia-texto').textContent = `${xp.valor} / ${XP_DIARIO_CAP}`;
-  $('xp-dia-fill').style.width = pct + '%';
+  const num = $('xp-dia-num');
+  if (num) num.textContent = xp.valor;
+  const ring = $('xp-ring');
+  if (ring) {
+    const C = 213.6; // 2πr, r=34
+    ring.style.strokeDashoffset = (C * (1 - pct / 100)).toFixed(1);
+  }
+}
+
+function popularData() {
+  const el = $('hero-data');
+  if (!el) return;
+  const txt = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+  el.textContent = txt.charAt(0).toUpperCase() + txt.slice(1);
+}
+
+function popularSemana() {
+  const cont = $('hero-week');
+  if (!cont) return;
+  const hist = getHistorico();
+  const iniciais = ['D','S','T','Q','Q','S','S'];
+  const hoje = new Date();
+  let html = '';
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(hoje);
+    d.setDate(hoje.getDate() - i);
+    const on = (hist[d.toISOString().slice(0, 10)] || 0) > 0;
+    html += `
+      <div class="hero-week__dia ${on ? 'on' : ''} ${i === 0 ? 'hoje' : ''}">
+        <span class="hero-week__dot">${on ? '✓' : ''}</span>
+        <span class="hero-week__lbl">${iniciais[d.getDay()]}</span>
+      </div>`;
+  }
+  cont.innerHTML = html;
 }
 
 function popularStats(perfil) {
