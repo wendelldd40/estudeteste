@@ -102,3 +102,31 @@ export async function listarConteudoAdmin() {
   if (error) return [];
   return data;
 }
+
+/**
+ * Retorna um Set com os IDs de matéria que realmente têm conteúdo ativo
+ * no banco. Resultado é cacheado por sessão (evita refetch a cada abertura).
+ * É isso que mantém os selos "Conteúdo" sincronizados automaticamente:
+ * basta inserir linhas em `conteudo_estudo` que a matéria passa a aparecer.
+ */
+let _materiasComConteudoCache = null;
+
+export async function materiasComConteudo() {
+  if (_materiasComConteudoCache) return _materiasComConteudoCache;
+  try {
+    const { data, error } = await sb
+      .from('conteudo_estudo')
+      .select('materia')
+      .eq('ativo', true);
+    if (error || !data) return new Set();
+    _materiasComConteudoCache = new Set(data.map(r => r.materia));
+    return _materiasComConteudoCache;
+  } catch {
+    return new Set();
+  }
+}
+
+/** Limpa o cache (chame após admin inserir/editar conteúdo). */
+export function invalidarCacheConteudo() {
+  _materiasComConteudoCache = null;
+}

@@ -1,4 +1,4 @@
-import { livrosDaMateria, secoesDoCapitulo } from '../../data/conteudo.repo.js';
+import { livrosDaMateria, secoesDoCapitulo, materiasComConteudo } from '../../data/conteudo.repo.js';
 import { ir, aoEntrar } from '../../core/router.js';
 
 
@@ -118,7 +118,20 @@ const TRILHAS = [
 // Matérias com questões no banco
 const COM_QUESTOES = new Set(['analisesclinicas','patologia','semiologia','farmacologia','inspecaoleite','zootecnia','aquicultura']);
 // Matérias com conteúdo teórico
-const COM_CONTEUDO = new Set(['imunologia','analisesclinicas','farmacologia','inspecaoleite','patologia','semiologia','aquicultura','zootecnia']);
+// Fallback inicial (otimista) — substituído pela verdade do banco assim que carrega.
+let COM_CONTEUDO = new Set(['imunologia','analisesclinicas','farmacologia','inspecaoleite','patologia','semiologia','aquicultura','zootecnia']);
+let _conteudoCarregado = false;
+
+// Sincroniza COM_CONTEUDO com o Supabase e re-renderiza os selos.
+async function sincronizarConteudo() {
+  try {
+    const real = await materiasComConteudo();
+    if (real && real.size >= 0) {
+      COM_CONTEUDO = real;
+      _conteudoCarregado = true;
+    }
+  } catch { /* mantém fallback */ }
+}
 
 
 // ── Cor de cada trilha (identidade clara ZeloVet) ─────────
@@ -197,6 +210,16 @@ export function renderizar() {
   `;
 
   registrarEventosTrilhas();
+
+  // Sincroniza selos de conteúdo com o banco (uma vez por sessão) e repinta.
+  if (!_conteudoCarregado) {
+    sincronizarConteudo().then(() => {
+      const trilhasEl = document.getElementById('estudo-trilhas');
+      if (trilhasEl && document.getElementById('estudo-screen')) {
+        trilhasEl.innerHTML = TRILHAS.map(t => renderTrilha(t)).join('');
+      }
+    });
+  }
 }
 
 function renderTrilha(t) {
@@ -276,7 +299,10 @@ async function abrirViewer(materiaId, nomeDisplay) {
   _livros  = await livrosDaMateria(materiaId);
 
   if (!_livros.length) {
-    toastErro('Conteúdo teórico em preparação para esta matéria.');
+    toastErro('Conteúdo desta matéria ainda está sendo preparado.');
+    // Corrige o selo: remove do Set pra não prometer o que não existe.
+    COM_CONTEUDO.delete(materiaId);
+    renderizar();
     return;
   }
 
@@ -432,8 +458,12 @@ function atualizarSecao() {
 }
 
 // ── SELETOR: Questões x Conteúdo ──────────────────────────
-function abrirEscolha(id, nome) {
+async function abrirEscolha(id, nome) {
   nome = nome || DISCIPLINAS[id] || id;
+
+  // Garante que sabemos a verdade do banco antes de decidir.
+  if (!_conteudoCarregado) await sincronizarConteudo();
+
   const temQ = COM_QUESTOES.has(id);
   const temC = COM_CONTEUDO.has(id);
 
