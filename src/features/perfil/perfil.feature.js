@@ -41,7 +41,7 @@ export function perfilTemplate() {
           </svg>
         </button>
         <div style="flex:1;">
-          <h1 class="page-header__title">👤 Perfil</h1>
+          <h1 class="page-header__title">Perfil</h1>
           <p class="page-header__sub">Personalize sua presença na plataforma</p>
         </div>
       </header>
@@ -118,8 +118,8 @@ function renderizar() {
       <h3 class="perfil-section__title">Nome</h3>
       <div class="field">
         <div class="field__input-wrap">
-          <span class="field__icon">✏️</span>
-          <input id="pf-nome" class="field__input field__input--with-icon"
+          
+          <input id="pf-nome" class="field__input"
                  type="text" maxlength="40"
                  value="${escapar(edicao.nome)}" placeholder="Como quer ser chamado?">
         </div>
@@ -170,11 +170,11 @@ function renderizar() {
     <!-- Save -->
     <div class="perfil-save">
       <button class="btn btn--primary btn--block btn--lg" data-action="salvar">
-        💾 Salvar alterações
+        Salvar alterações
       </button>
       <button class="btn btn--ghost btn--block btn--lg" data-action="logout"
         style="margin-top: var(--space-3); color: var(--danger, #C64B5D); border-color: var(--danger, #C64B5D);">
-        🚪 Sair da conta
+        Sair da conta
       </button>
     </div>
   `;
@@ -242,7 +242,7 @@ async function salvar() {
   };
 
   setPerfil(novo);
-  toastSucesso('✅ Perfil salvo!');
+  toastSucesso('Perfil salvo!');
 
   // Sincroniza em background
   sincronizarPerfil().catch(() => {});

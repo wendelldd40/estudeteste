@@ -7,9 +7,9 @@ import { rankingXP, rankingStreak, rankingQuestoes, marcarUsuarioAtual } from '.
 import { aoEntrar } from '../../core/router.js';
 
 const ABAS = [
-  { id: 'xp',       label: '⚡ XP',         carregar: rankingXP,       campo: 'xp_total',        sufixo: ' XP'    },
-  { id: 'streak',   label: '🔥 Streak',     carregar: rankingStreak,   campo: 'streak',          sufixo: ' dias'  },
-  { id: 'questoes', label: '📚 Questões',   carregar: rankingQuestoes, campo: 'total_questoes',  sufixo: ' resp.' },
+  { id: 'xp',       label: 'XP',         carregar: rankingXP,       campo: 'xp_total',        sufixo: ' XP'    },
+  { id: 'streak',   label: 'Streak',     carregar: rankingStreak,   campo: 'streak',          sufixo: ' dias'  },
+  { id: 'questoes', label: 'Questões',   carregar: rankingQuestoes, campo: 'total_questoes',  sufixo: ' resp.' },
 ];
 
 let abaAtiva = 'xp';
@@ -28,8 +28,8 @@ export function rankingTemplate() {
           </svg>
         </button>
         <div style="flex:1;">
-          <h1 class="page-header__title">🏆 Ranking</h1>
-          <p class="page-header__sub">Top alunos da plataforma</p>
+          <h1 class="page-header__title">Ranking</h1>
+          <p class="page-header__sub">Os alunos mais dedicados da plataforma</p>
         </div>
       </header>
 

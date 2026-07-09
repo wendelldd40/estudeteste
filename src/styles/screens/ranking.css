@@ -205,3 +205,112 @@
   border-radius: var(--radius-pill);
   margin-left: var(--space-1);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   RANKING v10 — polimento Universo ZeloVet
+   ═══════════════════════════════════════════════════════════ */
+
+.ranking__body { max-width: 760px; margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-12); }
+
+/* Tabs em segmented control */
+.ranking-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 14px; padding: 4px;
+  box-shadow: var(--shadow-sm); margin-bottom: var(--space-6);
+}
+.ranking-tab {
+  padding: 10px; border-radius: 10px;
+  font-size: 12.5px; font-weight: 700; color: var(--text-tertiary);
+  background: transparent; transition: .18s var(--ease); cursor: pointer;
+}
+.ranking-tab:hover { color: var(--text-secondary); background: var(--bg-4); }
+.ranking-tab.active {
+  background: linear-gradient(135deg, var(--accent), #0FA37F);
+  color: #fff; box-shadow: var(--shadow-brand);
+}
+
+/* ── PÓDIO ── */
+.podium {
+  display: grid; grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 12px; align-items: end; margin-bottom: var(--space-6);
+}
+.podium-step {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 18px; padding: 22px 14px 16px;
+  text-align: center; position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s var(--ease), box-shadow .2s;
+  animation: fi .4s var(--ease) both;
+}
+.podium-step:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.podium-step--2 { animation-delay: .05s; }
+.podium-step--3 { animation-delay: .1s; }
+
+/* 1º lugar: hero verde-Zelo */
+.podium-step--1 {
+  background:
+    radial-gradient(200px 120px at 50% -30%, rgba(201,157,102,.30), transparent 70%),
+    linear-gradient(160deg, #0C3328, #124537);
+  border: 1px solid rgba(201,157,102,.35);
+  padding: 30px 14px 20px;
+  box-shadow: 0 14px 34px rgba(12,51,40,.30);
+}
+.podium-step--1 .podium-step__nome  { color: #fff; }
+.podium-step--1 .podium-step__valor { color: var(--gold-l); font-size: 24px; }
+.podium-step--1 .podium-step__label { color: #9FC3B6; }
+.podium-step--1:hover { box-shadow: 0 18px 40px rgba(12,51,40,.38); }
+
+.podium-step__crown {
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  font-size: 26px; filter: drop-shadow(0 3px 6px rgba(0,0,0,.25));
+  animation: flame 3s ease-in-out infinite;
+}
+.podium-step__medal { font-size: 34px; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(12,51,40,.15)); }
+.podium-step__nome {
+  font-family: var(--font-display); font-size: 13.5px; font-weight: 800;
+  color: var(--zelo-deep); margin-bottom: 4px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.podium-step__valor { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--accent-dim); line-height: 1.1; }
+.podium-step__label { font-size: 9px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-quaternary); margin-top: 3px; }
+
+/* ── LISTA ── */
+.rank-list {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.rank-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 18px; border-bottom: 1px solid var(--border-subtle);
+  transition: background .12s;
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-row:hover { background: rgba(18,135,108,.04); }
+.rank-row--you {
+  background: var(--success-bg);
+  border-left: 3px solid var(--accent);
+}
+.rank-row__pos {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: var(--text-quaternary); min-width: 34px;
+}
+.rank-row__pos--gold   { color: var(--gold-dim); }
+.rank-row__pos--silver { color: #8A93A0; }
+.rank-row__pos--bronze { color: #B07A4A; }
+.rank-row__nome { flex: 1; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.rank-row__badge {
+  font-size: 8.5px; font-weight: 800; letter-spacing: .8px;
+  color: #fff; background: var(--accent);
+  padding: 2px 8px; border-radius: 99px; margin-left: 6px; vertical-align: 1px;
+}
+.rank-row__streak { font-size: 11.5px; color: var(--gold-dim); font-weight: 600; }
+.rank-row__valor { font-family: var(--font-display); font-size: 13.5px; font-weight: 800; color: var(--accent-dim); min-width: 80px; text-align: right; }
+
+@media (max-width: 600px) {
+  .podium { gap: 8px; }
+  .podium-step { padding: 16px 8px 12px; border-radius: 14px; }
+  .podium-step__medal { font-size: 26px; }
+  .podium-step__valor { font-size: 16px; }
+  .podium-step--1 .podium-step__valor { font-size: 19px; }
+}
