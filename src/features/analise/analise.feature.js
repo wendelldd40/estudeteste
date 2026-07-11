@@ -107,7 +107,7 @@ function renderRecomendacao(r) {
 
   return `
     <div class="recommendation">
-      <div class="recommendation__label">📌 Recomendação</div>
+      <div class="recommendation__label">Recomendação</div>
       <h2 class="recommendation__title">${escapar(r.titulo)}</h2>
       <p class="recommendation__text">${escapar(r.texto)}</p>
       <div class="recommendation__cta">${ctaHTML}</div>
@@ -140,7 +140,7 @@ function renderResumo(r) {
 
 function renderPrioridades(itens) {
   return `
-    <h3 class="section-title">🎯 Foco prioritário</h3>
+    <h3 class="section-title">Foco prioritário</h3>
     <div class="priority-list">
       ${itens.map((t, i) => `
         <div class="priority-card">
@@ -246,7 +246,7 @@ function renderRodape() {
   return `
     <div style="margin-top: var(--space-8); text-align: center;">
       <button class="btn btn--danger btn--sm" data-action="limpar">
-        🗑 Limpar histórico de erros
+        Limpar histórico de erros
       </button>
     </div>
   `;

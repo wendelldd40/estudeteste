@@ -31,7 +31,7 @@ export function evolucaoTemplate() {
           </svg>
         </button>
         <div style="flex:1;">
-          <h1 class="page-header__title">📈 Evolução</h1>
+          <h1 class="page-header__title">Evolução</h1>
           <p class="page-header__sub">Seu progresso ao longo do tempo</p>
         </div>
       </header>

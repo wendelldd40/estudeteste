@@ -17,13 +17,10 @@ export function resultsTemplate() {
 
           <div class="results-ring">
             <svg width="160" height="160" viewBox="0 0 160 160">
-              <circle cx="80" cy="80" r="68" fill="none"
-                      stroke="var(--bg-4)" stroke-width="12"/>
-              <circle id="r-arc" cx="80" cy="80" r="68" fill="none"
-                      stroke="var(--brand-green)" stroke-width="12"
-                      stroke-linecap="round"
-                      stroke-dasharray="427" stroke-dashoffset="427"
-                      style="transition: stroke-dashoffset 1.5s var(--ease-out), stroke 0.5s;"/>
+              <circle class="results-ring__track" cx="80" cy="80" r="68"/>
+              <circle id="r-arc" class="results-ring__arc" cx="80" cy="80" r="68"
+                      stroke="var(--gold-l)"
+                      stroke-dasharray="427" stroke-dashoffset="427"/>
             </svg>
             <div class="results-ring__center">
               <span class="results-ring__pct" id="r-pct">0%</span>
@@ -56,15 +53,15 @@ export function resultsTemplate() {
 
         <div class="results-details">
           <div class="results-detail">
-            <span class="results-detail__label">⏱ Tempo total</span>
+            <span class="results-detail__label">Tempo total</span>
             <span class="results-detail__value" id="r-tempo">—</span>
           </div>
           <div class="results-detail">
-            <span class="results-detail__label">⚡ Tempo médio por questão</span>
+            <span class="results-detail__label">Tempo médio por questão</span>
             <span class="results-detail__value" id="r-tempo-medio">—</span>
           </div>
           <div class="results-detail" id="r-revisao-row" hidden>
-            <span class="results-detail__label">⭐ Marcadas para revisar</span>
+            <span class="results-detail__label">Marcadas para revisar</span>
             <span class="results-detail__value" id="r-revisao">0</span>
           </div>
         </div>
@@ -77,7 +74,7 @@ export function resultsTemplate() {
             Voltar ao início
           </button>
           <button class="results-link" data-goto="analise">
-            📊 Ver análise de erros completa
+            Ver análise de erros completa
           </button>
         </div>
 
@@ -108,7 +105,8 @@ async function popular() {
 
   // Cor do anel e do número conforme performance
   const corClasse = pct >= 70 ? 'success' : pct >= 50 ? 'warning' : 'danger';
-  const corVar = pct >= 70 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--danger)';
+  // Sobre o hero verde-Zelo: dourado para bom/médio, rosa-claro para baixo (contraste).
+  const corVar = pct >= 50 ? 'var(--gold-l)' : '#F2A6B0';
   arc.setAttribute('stroke', corVar);
 
   const elPct = $('r-pct');

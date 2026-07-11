@@ -24,7 +24,7 @@ export function conquistasTemplate() {
           </svg>
         </button>
         <div style="flex:1;">
-          <h1 class="page-header__title">🏅 Conquistas</h1>
+          <h1 class="page-header__title">Conquistas</h1>
           <p class="page-header__sub">Suas medalhas desbloqueadas</p>
         </div>
       </header>
