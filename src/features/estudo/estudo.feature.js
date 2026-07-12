@@ -29,6 +29,7 @@ const TRILHAS = [
       { id: 'fisiologia',   nome: 'Fisiologia Veterinária',      meta: 'I e II · 180h', grad: 'linear-gradient(135deg,#3a2a1a,#6e3b0d)', emoji: '⚡' },
       { id: 'microbiologia',nome: 'Microbiologia Veterinária',   meta: '100h',          grad: 'linear-gradient(135deg,#1a3a3a,#0d6e6e)', emoji: '🦠' },
       { id: 'imunologia',   nome: 'Imunologia Veterinária',      meta: '60h',           grad: 'linear-gradient(135deg,#2a1a2a,#6e0d5a)', emoji: '🛡️' },
+      { id: 'genetica',     nome: 'Genética Veterinária',        meta: '60h',           grad: 'linear-gradient(135deg,#0d2a2a,#0d6e5a)', emoji: '🧬' },
     ],
   },
   {
